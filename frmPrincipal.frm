@@ -15,9 +15,9 @@ Begin VB.MDIForm frmPrincipal
       Height          =   555
       Left            =   0
       TabIndex        =   1
-      Top             =   2475
-      Width           =   4560
-      _ExtentX        =   8043
+      Top             =   10080
+      Width           =   20250
+      _ExtentX        =   35719
       _ExtentY        =   979
       _Version        =   393216
       BeginProperty Panels {8E3867A5-8586-11D1-B16A-00C0F0283628} 
@@ -60,32 +60,32 @@ Begin VB.MDIForm frmPrincipal
             Key             =   ""
          EndProperty
          BeginProperty ListImage2 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmPrincipal.frx":005E
+            Picture         =   "frmPrincipal.frx":0452
             Key             =   ""
          EndProperty
          BeginProperty ListImage3 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmPrincipal.frx":00BC
+            Picture         =   "frmPrincipal.frx":076C
             Key             =   ""
          EndProperty
          BeginProperty ListImage4 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmPrincipal.frx":011A
+            Picture         =   "frmPrincipal.frx":0BBE
             Key             =   ""
          EndProperty
          BeginProperty ListImage5 {2C247F27-8591-11D1-B16A-00C0F0283628} 
-            Picture         =   "frmPrincipal.frx":0178
+            Picture         =   "frmPrincipal.frx":1010
             Key             =   ""
          EndProperty
       EndProperty
    End
    Begin MSComctlLib.Toolbar Toolbar1 
       Align           =   1  'Align Top
-      Height          =   660
+      Height          =   900
       Left            =   0
       TabIndex        =   0
       Top             =   0
-      Width           =   4560
-      _ExtentX        =   8043
-      _ExtentY        =   1164
+      Width           =   20250
+      _ExtentX        =   35719
+      _ExtentY        =   1588
       ButtonWidth     =   2778
       ButtonHeight    =   1429
       Appearance      =   1
