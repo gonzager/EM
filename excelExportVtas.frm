@@ -34,7 +34,7 @@ Begin VB.Form excelExportVtas
       Height          =   375
       Left            =   2520
       TabIndex        =   5
-      Top             =   2070
+      Top             =   2040
       Width           =   2250
    End
    Begin VB.Frame frmCriterios 
@@ -61,7 +61,7 @@ Begin VB.Form excelExportVtas
          _ExtentX        =   2461
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   75431937
+         Format          =   102694913
          CurrentDate     =   42208
       End
       Begin MSComCtl2.DTPicker dpFechaDesde 
@@ -73,7 +73,7 @@ Begin VB.Form excelExportVtas
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   75431937
+         Format          =   102694913
          CurrentDate     =   42208
       End
       Begin MSMask.MaskEdBox txtNroIdVendedor 
@@ -154,7 +154,8 @@ Private Sub cmdGenerarAlicuotasVentas_Click()
     ls_sql = "SELECT * FROM V_EXPORTAR_ALICUOTA_VENTAS " + _
              "WHERE FECHA_VENTA between '" & Format(Me.dpFechaDesde, "YYYYMMDD") & "' " + _
              "AND '" & Format(Me.dpFechaHasta, "YYYYMMDD") & "' " + _
-             "AND EMPRESA_ID=" & Me.txtNroIdVendedor
+             "AND EMPRESA_ID=" & Me.txtNroIdVendedor & " " + _
+             "ORDER BY EMPRESA_ID, [TIPO DE COMPROBANTE], [Punto de Venta], [Comprobante Desde] "
     If Exportar_Recordset(nombreArchivoTXT, ls_sql, "", False, 2) Then
         MsgBox "La exportación del archivo cabecera de ventas se ha realizado con Exito", vbInformation, "Exportación de Cabecera de Ventas"
     Else
@@ -174,7 +175,8 @@ Private Sub cmdGenerarArchivoVentas_Click()
     ls_sql = "SELECT * FROM V_EXPORTAR_CABECERA_VENTAS " + _
              "WHERE [Fecha de Comprobante] between '" & Format(Me.dpFechaDesde, "YYYYMMDD") & "' " + _
              "AND '" & Format(Me.dpFechaHasta, "YYYYMMDD") & "' " + _
-             "AND EMPRESA_ID=" & Me.txtNroIdVendedor
+             "AND EMPRESA_ID=" & Me.txtNroIdVendedor & " " & _
+             "ORDER BY EMPRESA_ID, [TIPO DE COMPROBANTE], [Punto de Venta], [Comprobante Desde] "
     If Exportar_Recordset(nombreArchivoTXT, ls_sql, "", False, 1) Then
         MsgBox "La exportación del archivo cabecera de ventas se ha realizado con Exito", vbInformation, "Exportación de Cabecera de Ventas"
     Else
@@ -199,10 +201,10 @@ End Sub
 Private Sub txtNroIdVendedor_GotFocus()
     With txtNroIdVendedor
         .SelStart = 0
-        .SelLength = Len(.Text)
+        .SelLength = Len(.text)
     End With
     
-    txtRazonSocial.Text = ""
+    txtRazonSocial.text = ""
     
 End Sub
 
@@ -211,9 +213,9 @@ Private Sub txtNroIdVendedor_KeyPress(KeyAscii As Integer)
         Dim indentificador As Double
         frmBusquedaEmpresa.inicializarFormulario indentificador
         txtNroIdVendedor.Mask = ""
-        txtNroIdVendedor.Text = indentificador
+        txtNroIdVendedor.text = indentificador
         'txtNroIdVendedor.Mask = "##-########-#"
-        SendKeys "{tab}"
+        Sendkeys "{tab}"
         Exit Sub
     End If
    
@@ -232,12 +234,12 @@ Private Sub txtNroIdVendedor_LostFocus()
             Dim ltEmpresa As tEmpresa
             ltEmpresa = recuperarEmpresaPorIdentificador(txtNroIdVendedor.ClipText)
             If ltEmpresa.existe Then
-                txtRazonSocial.Text = ltEmpresa.razonSocial
+                txtRazonSocial.text = ltEmpresa.razonSocial
                 
             Else
                 With txtNroIdVendedor
                     .SelStart = 0
-                    .SelLength = Len(.Text)
+                    .SelLength = Len(.text)
                     .SetFocus
                 End With
                
@@ -245,7 +247,7 @@ Private Sub txtNroIdVendedor_LostFocus()
         Else
             With txtNroIdVendedor
                 .SelStart = 0
-                .SelLength = Len(.Text)
+                .SelLength = Len(.text)
                 .SetFocus
             End With
            

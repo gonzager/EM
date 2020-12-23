@@ -1,5 +1,5 @@
 VERSION 5.00
-Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "mscomct2.ocx"
+Object = "{86CF1D34-0C5F-11D2-A9FC-0000F8754DA1}#2.0#0"; "MSCOMCT2.OCX"
 Object = "{C932BA88-4374-101B-A56C-00AA003668DC}#1.1#0"; "MSMASK32.OCX"
 Begin VB.Form excelExportCpas 
    Caption         =   "Generación de Informes y Archivos de Compras"
@@ -61,7 +61,7 @@ Begin VB.Form excelExportCpas
          _ExtentX        =   2461
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   143917057
+         Format          =   102694913
          CurrentDate     =   42208
       End
       Begin MSComCtl2.DTPicker dpFechaDesde 
@@ -73,7 +73,7 @@ Begin VB.Form excelExportCpas
          _ExtentX        =   2355
          _ExtentY        =   556
          _Version        =   393216
-         Format          =   143917057
+         Format          =   102694913
          CurrentDate     =   42208
       End
       Begin MSMask.MaskEdBox txtNroIdComprador 
@@ -173,7 +173,8 @@ Private Sub cmdGenerarAlicuotasVentas_Click()
     ls_sql = "SELECT * FROM V_EXPORTAR_ALICUOTA_COMPRAS " + _
              "WHERE FECHA_IMPUTACION between '" & Format(Me.dpFechaDesde, "YYYYMMDD") & "' " + _
              "AND '" & Format(Me.dpFechaHasta, "YYYYMMDD") & "' " + _
-             "AND EMPRESA_ID=" & Me.txtNroIdComprador
+             "AND EMPRESA_ID=" & Me.txtNroIdComprador & " " + _
+             "ORDER BY EMPRESA_ID, [Tipo de comprobante], [Punto de venta], [Número de comprobante] "
     If Exportar_Recordset(nombreArchivoTXT, ls_sql, "", False, 2) Then
         MsgBox "La exportación del archivo detalle de compras se ha realizado con Exito", vbInformation, "Exportación de Cabecera de Ventas"
     Else
@@ -195,7 +196,8 @@ Private Sub cmdGenerarArchivoVentas_Click()
     ls_sql = "SELECT * FROM V_EXPORTAR_CABECERA_COMPRAS " + _
              "WHERE [FECHA_IMPUTACION] between '" & Format(Me.dpFechaDesde, "YYYYMMDD") & "' " + _
              "AND '" & Format(Me.dpFechaHasta, "YYYYMMDD") & "' " + _
-             "AND EMPRESA_ID=" & Me.txtNroIdComprador
+             "AND EMPRESA_ID=" & Me.txtNroIdComprador & " " + _
+             "ORDER BY EMPRESA_ID, [Tipo de Comprobante], [Punto de Venta], Comprobante "
     If Exportar_Recordset(nombreArchivoTXT, ls_sql, "", False, 2) Then
         MsgBox "La exportación del archivo cabecera de compras se ha realizado con Exito", vbInformation, "Exportación de Cabecera de Ventas"
     Else
@@ -220,10 +222,10 @@ End Sub
 Private Sub txtNroIdComprador_GotFocus()
     With txtNroIdComprador
         .SelStart = 0
-        .SelLength = Len(.Text)
+        .SelLength = Len(.text)
     End With
     
-    txtRazonSocial.Text = ""
+    txtRazonSocial.text = ""
     
 End Sub
 
@@ -232,9 +234,9 @@ Private Sub txtNroIdComprador_KeyPress(KeyAscii As Integer)
         Dim indentificador As Double
         frmBusquedaEmpresa.inicializarFormulario indentificador
         txtNroIdComprador.Mask = ""
-        txtNroIdComprador.Text = indentificador
+        txtNroIdComprador.text = indentificador
         'txtNroIdComprador.Mask = "##-########-#"
-        SendKeys "{tab}"
+        Sendkeys "{tab}"
         Exit Sub
     End If
    
@@ -254,12 +256,12 @@ On Error Resume Next
             Dim ltEmpresa As tEmpresa
             ltEmpresa = recuperarEmpresaPorIdentificador(txtNroIdComprador.ClipText)
             If ltEmpresa.existe Then
-                txtRazonSocial.Text = ltEmpresa.razonSocial
+                txtRazonSocial.text = ltEmpresa.razonSocial
                 
             Else
                 With txtNroIdComprador
                     .SelStart = 0
-                    .SelLength = Len(.Text)
+                    .SelLength = Len(.text)
                     .SetFocus
                 End With
                
@@ -267,7 +269,7 @@ On Error Resume Next
         Else
             With txtNroIdComprador
                 .SelStart = 0
-                .SelLength = Len(.Text)
+                .SelLength = Len(.text)
                 .SetFocus
             End With
            
